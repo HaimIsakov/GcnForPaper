@@ -1,7 +1,5 @@
 # GcnForPaper
 
-How to run?
-
 Choose one of the datasets:
 Options: cirrhosis, IBD, bw, IBD_Chrone, male_vs_female,nut,peanut,nugent,allergy_milk_no_controls
 Choose one of the tasks:
