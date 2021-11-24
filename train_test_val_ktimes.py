@@ -62,8 +62,6 @@ class TrainTestValKTimes:
             if not self.nni_flag:
                 os.mkdir(os.path.join(directory_root, f"Run{run}"))
                 root = os.path.join(directory_root, f"Run{run}")
-                f = open(os.path.join(directory_root, f"Validation_Auc_{trainer_and_tester.val_auc:.9f}.txt"), 'w')
-                f.close()
                 self.plot_acc_loss_auc(root, date, trainer_and_tester)
             run += 1
         return train_metric, val_metric, test_metric, min_train_val_metric
@@ -133,7 +131,7 @@ class TrainTestValKTimes:
     def plot_acc_loss_auc(self, root, date, trainer_and_tester):
         # root = os.path.join(root, f'Values_and_graph_structure_on_nodes_model_{date}')
         # os.mkdir(root)
-        with open(os.path.join(root, "params_file_1_gcn.json"), 'w') as pf:
+        with open(os.path.join(root, "params_file.json"), 'w') as pf:
             json.dump(self.RECEIVED_PARAMS, pf)
         # copyfile(params_file_1_gcn, os.path.join(root, "params_file_1_gcn.json"))
         self.plot_measurement(root, date, trainer_and_tester, LOSS_PLOT)
