@@ -1,4 +1,4 @@
-# GcnForPaper
+# gMic
 
 Choose one of the datasets: 
 
