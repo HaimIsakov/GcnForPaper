@@ -17,12 +17,11 @@ from MyDatasets import *
 
 LOG = logging.getLogger('nni_logger')
 K = 10  # For k-cross-validation
-datasets_dict = {"cirrhosis": MyDatasets.cirrhosis_files, "IBD": MyDatasets.ibd_files,
-                 "bw": MyDatasets.bw_files, "IBD_Chrone": MyDatasets.ibd_chrone_files,
-                 "allergy_milk_or_not": MyDatasets.allergy_milk_or_not_files,
-                 "male_vs_female": MyDatasets.male_vs_female,
+datasets_dict = {"bw": MyDatasets.bw_files, "IBD_Chrone": MyDatasets.ibd_chrone_files,
+                 "male_female": MyDatasets.male_vs_female,
                  "nut": MyDatasets.nut, "peanut": MyDatasets.peanut, "nugent": MyDatasets.nugent,
-                 "allergy_milk_no_controls": MyDatasets.allergy_milk_no_controls}
+                 "milk": MyDatasets.allergy_milk_no_controls, "Cirrhosis": MyDatasets.cirrhosis_files,
+                "IBD": MyDatasets.ibd_files}
 
 tasks_dict = {1: MyTasks.just_values, 2: MyTasks.just_graph_structure, 3: MyTasks.values_and_graph_structure}
 
@@ -47,7 +46,7 @@ class Main:
         directory_name, mission, params_file_path = my_tasks.get_task_files(self.task_number)
         result_directory_name = os.path.join(directory_name, "Result_After_Proposal")
         train_data_file_path, train_tag_file_path, test_data_file_path, test_tag_file_path = \
-            my_datasets.get_dataset_files(self.dataset_name)
+            my_datasets.microbiome_files(self.dataset_name)
 
         print("Training-Validation Sets Graphs")
         train_val_dataset = self.create_dataset(train_data_file_path, train_tag_file_path, mission)
@@ -153,7 +152,9 @@ if __name__ == '__main__':
         cuda_number = args.device_num
         nni_flag = False if args.nni == 0 else True
 
-        run_regular(dataset_name, mission_number, cuda_number, nni_flag)
+        for dataset_name in list(datasets_dict.keys()):
+            for mission_number in [1,2,3]:
+                run_regular(dataset_name, mission_number, cuda_number, nni_flag)
 
     except Exception as e:
         LOG.exception(e)
